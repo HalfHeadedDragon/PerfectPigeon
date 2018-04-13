@@ -28,6 +28,11 @@ class Enemy extends Unit
     {
         this._Behaviour = new Behaviour(null, this);
     }
+    public Update() : void
+    {
+        this._Behaviour.Act();
+        super.Update();
+    }
     protected LoadSprites(Path:string, Length:number) : void
     {
         super.LoadSprites("Enemy/"+Path, Length);

@@ -29,11 +29,37 @@ class Player extends Unit
     }
     private InitPlayer() : void
     {
-        this.Size = new TBX.Vertex(250,250,1);
-        this.Position = new TBX.Vertex()
+        this._Shooting = false;
         this._Stand = TBX.SceneObjectUtil.CreateSprite("Stand", ["Resources/Textures/Player/Stand/Stand.png"], this.Position, this.Size);
-        this.LoadSprites("Player/Pigeon", 3);
+        this._Stand.Position = new TBX.Vertex(960, 540, 1.5);
+        this.LoadSprites("Player/Pigeon/Pigeon", 3);
         this.AttachWeapon(new MachineGun());
+        this.Size = new TBX.Vertex(200,200,1);
+        this.Position = new TBX.Vertex(960, 540, 1.5);
+    }
+    public Update() : void
+    {
+        super.Update();
+    }
+    public MouseDown(G:TBX.Game, Args:any) : void
+    {
+        if (Args.MouseButton == 0) this._Shooting = true;
+        else if (Args.MouseButton == 2) this._Moving = true;
+    }
+    public MouseUp(G:TBX.Game, Args:any) : void
+    {
+        if (Args.MouseButton == 0) this._Shooting= false;
+        else if (Args.MouseButton == 2) this._Moving = false;
+    }
+    public MouseMove(G:TBX.Game, Args:any) : void
+    {
+        this.Facing = this.CalcAngle(this.Trans.Translation, Args.Location);
+    }
+    protected UpdateFacing(Facing:number) : void
+    {
+        // Override
+        super.UpdateFacing(Facing);
+        this._Stand.Trans.Rotation.Z = Facing;
     }
     public OnAttach(Args:any) : void
     {
@@ -46,6 +72,9 @@ class Player extends Unit
             let PW:PlayerWeapon = <PlayerWeapon> this._Weapons[i];
             Scene.Attach(PW.Visual);
         }
+        Scene.Events.MouseMove.push(this.MouseMove.bind(this));
+        Scene.Events.MouseDown.push(this.MouseDown.bind(this));
+        Scene.Events.MouseUp.push(this.MouseUp.bind(this));
     }
     public OnRemove(Args:any) : void
     {

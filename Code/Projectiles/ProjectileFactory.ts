@@ -2,11 +2,14 @@ export { ProjectileFactory }
 
 import { Projectile } from "./Projectile";
 
+import { MachineGunBullet } from "./Player/MachineGunBullet";
+import { HeavyMachineGunBullet } from "./Player/HeavyMachineGunBullet";
+
 class ProjectileFactory
 {
     public static Current:ProjectileFactory;
     private _Pool:any;
-    public constructor(Old:ProjectileFactory)
+    public constructor(Old?:ProjectileFactory)
     {
         if(Old)
         {
@@ -30,5 +33,11 @@ class ProjectileFactory
     {
         if(!this._Pool[ID]) return null;
         return this._Pool[ID].Copy();
+    }
+    public static Init()
+    {
+        let Factory:ProjectileFactory = new ProjectileFactory();
+        Factory.Register("MachineGunBullet", new MachineGunBullet());
+        Factory.Register("HeavyMachineGunBullet", new HeavyMachineGunBullet());
     }
 }

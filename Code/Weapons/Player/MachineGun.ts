@@ -13,7 +13,7 @@ class MachineGun extends PlayerWeapon
         }
         else
         {
-
+            this.InitMachineGun();
         }
     }
     public Copy() : MachineGun
@@ -22,6 +22,7 @@ class MachineGun extends PlayerWeapon
     }
     private InitMachineGun() : void
     {
+        this._ProjectileID = "MachineGunBullet";
         this.LoadSprites("MachineGun");
     }
 }

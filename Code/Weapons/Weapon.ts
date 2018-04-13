@@ -55,7 +55,7 @@ class Weapon
     public Shoot() : void
     {
         if(!this._Active) return;
-        if(this._Ammo < 1) return;
+        if(this._Ammo != -1 && this._Ammo < 1) return;
         if(State.Current.TimeStamp % this._FireRate != 0) return;
         let NewProjectile:Projectile = ProjectileFactory.Current.Create(this._ProjectileID);
         NewProjectile.Position = this._ParentPosition.Copy().Add(this._Position);

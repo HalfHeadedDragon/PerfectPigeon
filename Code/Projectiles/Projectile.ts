@@ -40,7 +40,14 @@ class Projectile extends Entity
         this._Summons = [];
         this._Spin = 0;
         this._SpinRate = 0;
+        this._BaseStats.Speed = 10;
         this._BaseStats.Health = 5000;
         this._BaseStats.MaxHealth = 5000;
+        this._Moving = true;
+        this.Size = new TBX.Vertex(20,20,1);
+    }
+    protected LoadSprites(Path:string, Length:number) : void
+    {
+        super.LoadSprites("Projectile/"+Path, Length);
     }
 }

@@ -8,12 +8,11 @@ import { Weapon } from "./../Weapons/Weapon";
 
 class Unit extends Entity
 {
-    private _Shooting:boolean;
+    protected _Shooting:boolean;
     protected _Buffs:Buff[];
     protected _Weapons:Weapon[];
     public set Shooting(Value:boolean) { this._Shooting = Value; }
     public set Facing(Value:number) { this.UpdateFacing(Value); }
-    public set Position(Value:TBX.Vertex) { this.UpdatePosition(Value); }
     public constructor(Old?:Unit)
     {
         super(Old)
@@ -48,7 +47,7 @@ class Unit extends Entity
             this._Buffs[i].Update();
             this._Buffs[i].Apply(this._Stats);
         }
-        for(let i = this._Buffs.length; i >= 0; i--)
+        for(let i = this._Buffs.length - 1; i >= 0; i--)
         {
             if(this._Buffs[i].Expired) this._Buffs.splice(i,1);
         }
@@ -60,7 +59,7 @@ class Unit extends Entity
             }
         }
     }
-    private UpdateFacing(Facing:number) : void
+    protected UpdateFacing(Facing:number) : void
     {
         // Virtual
         this.Trans.Rotation.Z = Facing;
@@ -69,9 +68,10 @@ class Unit extends Entity
             this._Weapons[i].Facing = Facing;
         }
     }
-    private UpdatePosition(Position:TBX.Vertex) : void
+    protected UpdatePosition(Position:TBX.Vertex) : void
     {
-        this.Trans.Translation = Position;
+        // Override
+        super.UpdatePosition(Position);
         for(let i in this._Weapons)
         {
             this._Weapons[i].ParentPosition = Position;

@@ -25,8 +25,8 @@ class Behaviour
         else
         {
 
-            let Sight = TBX.Random.Next(600,1000);
-            let Radius = TBX.Random.Next(350,650);
+            let Sight = 800;
+            let Radius = 400;
             this._Sight = Sight;
             this._Radius = Radius;
             this._Unit = Unit;
@@ -52,13 +52,11 @@ class Behaviour
     public RadiusAct()
     {
         this._Unit.Shooting = true;
+        this._Unit.Moving = false;
     }
     public SightAct()
     {
         this._Unit.Shooting = false;
-        let Direction = new TBX.Vertex(0, this._Unit.Stats.Speed,0);
-        Direction.RotateZ(this._Angle - 90);
-        this._Unit.Position.X += Direction.X;
-        this._Unit.Position.Y += Direction.Y;
+        this._Unit.Moving = true;
     }
 }

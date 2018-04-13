@@ -29,12 +29,14 @@ class PlayerWeapon extends Weapon
     private InitPlayerWeapon() : void
     {
         this._Visual = new TBX.Sprite();
+        this._Visual.Size = new TBX.Vertex(200,200,1);
+        this._Visual.Position = new TBX.Vertex(960, 540, 1.5);
     }
     protected LoadSprites(Type:string) : void
     {
         this._Visual.Collection = new TBX.SpriteSetCollection(null, []);
         let SpriteSet:TBX.SpriteSet = new TBX.SpriteSet(null, [], "Default");
-        for(let i = 0; i < 1; i++) SpriteSet.Images.push("Resources/Textures/Player/Weapon/" + Type + i);
+        SpriteSet.Images.push("Resources/Textures/Player/Weapons/" + Type + ".png");
         this._Visual.Collection.SpriteSets.push(SpriteSet);
     }
 }

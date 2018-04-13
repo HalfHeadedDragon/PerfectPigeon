@@ -13,7 +13,9 @@ class State
     {
         if(Old)
         {
-
+            this._TimeStamp = Old._TimeStamp;
+            this._Projectiles = [];
+            for(let i in Old._Projectiles) this._Projectiles.push(Old._Projectiles[i].Copy());
         }
         else
         {
@@ -27,10 +29,13 @@ class State
     }
     private InitState() : void
     {
-
+        this._TimeStamp = 0;
+        this._Projectiles = [];
     }
     public Update() : void
     {
         this._TimeStamp++;
+        if(this._TimeStamp == 120000) this._TimeStamp = 0;
+        for(let i in this._Projectiles) this._Projectiles[i].Update();
     }
 }
