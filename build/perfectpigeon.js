@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/Resources/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -97,54 +97,6 @@ function(){"use strict";HowlerGlobal.prototype._pos=[0,0,0],HowlerGlobal.prototy
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(2);
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var GameLogic_1 = __webpack_require__(3);
-var GL = new GameLogic_1.GameLogic();
-GL.Run();
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var TBX = __webpack_require__(0);
-var MainMenu_1 = __webpack_require__(4);
-var FactoryInit_1 = __webpack_require__(19);
-var GameLogic = /** @class */ (function () {
-    function GameLogic() {
-        this._Game = new TBX.Game();
-        this._Game.Name = "Perfect Pigeon";
-        this._Runner = new TBX.Runner(this._Game, TBX.DrawEngineType.ThreeJS);
-        this._Runner.SetResolution(new TBX.Vertex(1920, 1080));
-        var _Menu = new MainMenu_1.MainMenu(this._Runner, this._Game);
-        this._Game.Attach(_Menu);
-        FactoryInit_1.FactoryInit.Init();
-    }
-    GameLogic.prototype.Run = function () {
-        this._Runner.SwitchScene("Menu");
-        this._Runner.Run();
-    };
-    return GameLogic;
-}());
-exports.GameLogic = GameLogic;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
@@ -159,114 +111,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var TBX = __webpack_require__(0);
-var GameScene_1 = __webpack_require__(5);
-var MainMenu = /** @class */ (function (_super) {
-    __extends(MainMenu, _super);
-    function MainMenu(Runner, Game) {
-        var _this = _super.call(this) || this;
-        _this._Game = Game;
-        _this._Runner = Runner;
-        _this.Init();
-        return _this;
-    }
-    MainMenu.prototype.Init = function () {
-        this.Name = "Menu";
-        var Buttons = new TBX.ImageCollection(null, ["/Resources/Textures/Play.png"]);
-        var Play = new TBX.Tile();
-        Play.Name = "Play";
-        Play.Collection = Buttons;
-        Play.Index = 0;
-        Play.Trans.Scale = new TBX.Vertex(300, 150, 1);
-        Play.Trans.Translation = new TBX.Vertex(200, 200, 0);
-        Play.Events.MouseDown.push(this.PlayClick.bind(this));
-        this.Attach(Play);
-    };
-    MainMenu.prototype.PlayClick = function (G, Args) {
-        var Scene = new GameScene_1.GameScene();
-        this._Game.Attach(Scene);
-        this._Runner.SwitchScene("Game", false);
-    };
-    return MainMenu;
-}(TBX.Scene2D));
-exports.MainMenu = MainMenu;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var TBX = __webpack_require__(0);
-var Player_1 = __webpack_require__(6);
-var State_1 = __webpack_require__(13);
-var GameScene = /** @class */ (function (_super) {
-    __extends(GameScene, _super);
-    function GameScene() {
-        var _this = _super.call(this) || this;
-        _this.Init();
-        return _this;
-    }
-    Object.defineProperty(GameScene.prototype, "Pause", {
-        get: function () { return this._Pause; },
-        set: function (value) { this._Pause = value; },
-        enumerable: true,
-        configurable: true
-    });
-    GameScene.prototype.Init = function () {
-        this.Name = "Game";
-        this.BackColor = TBX.Color.Teal;
-        this._Player = new Player_1.Player();
-        this.Attach(this._Player);
-        var MainState = new State_1.State();
-        this.Events.Update.push(this.SceneUpdate.bind(this));
-    };
-    GameScene.prototype.KeyPress = function (G, Args) {
-        if (this._Pause)
-            return;
-        // Key Code here
-    };
-    GameScene.prototype.SceneUpdate = function () {
-        if (this._Pause)
-            return;
-        this._Player.Update();
-    };
-    return GameScene;
-}(TBX.Scene2D));
-exports.GameScene = GameScene;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var TBX = __webpack_require__(0);
-var Unit_1 = __webpack_require__(7);
-var MachineGun_1 = __webpack_require__(10);
+var Unit_1 = __webpack_require__(2);
+var MachineGun_1 = __webpack_require__(14);
+var HeavyMachineGun_1 = __webpack_require__(24);
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player(Old) {
@@ -284,12 +131,23 @@ var Player = /** @class */ (function (_super) {
     };
     Player.prototype.InitPlayer = function () {
         this._Shooting = false;
-        this._Stand = TBX.SceneObjectUtil.CreateSprite("Stand", ["Resources/Textures/Player/Stand/Stand.png"], this.Position, this.Size);
-        this._Stand.Position = new TBX.Vertex(960, 540, 1.5);
         this.LoadSprites("Player/Pigeon/Pigeon", 3);
-        this.AttachWeapon(new MachineGun_1.MachineGun());
+        this._LeftMachineGun = new MachineGun_1.MachineGun();
+        this._LeftMachineGun.Position.X = -38;
+        this._RightMachineGun = new MachineGun_1.MachineGun();
+        this._RightMachineGun.Position.X = 38;
+        this.AttachWeapon(this._LeftMachineGun);
+        this.AttachWeapon(this._RightMachineGun);
+        this._LeftHeavyMachineGun = new HeavyMachineGun_1.HeavyMachineGun();
+        this._LeftHeavyMachineGun.Position.X = -38;
+        this._RightHeavyMachineGun = new HeavyMachineGun_1.HeavyMachineGun();
+        this._RightHeavyMachineGun.Position.X = 38;
+        this.AttachWeapon(this._LeftHeavyMachineGun);
+        this.AttachWeapon(this._RightHeavyMachineGun);
         this.Size = new TBX.Vertex(200, 200, 1);
         this.Position = new TBX.Vertex(960, 540, 1.5);
+        this._Stand = TBX.SceneObjectUtil.CreateSprite("Stand", ["Resources/Textures/Player/Stand/Stand.png"], this.Position, this.Size);
+        this._Stand.Position = new TBX.Vertex(960, 540, 1.6);
     };
     Player.prototype.Update = function () {
         _super.prototype.Update.call(this);
@@ -343,7 +201,7 @@ exports.Player = Player;
 
 
 /***/ }),
-/* 7 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -359,7 +217,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Entity_1 = __webpack_require__(8);
+var Entity_1 = __webpack_require__(3);
 var Unit = /** @class */ (function (_super) {
     __extends(Unit, _super);
     function Unit(Old) {
@@ -436,7 +294,7 @@ exports.Unit = Unit;
 
 
 /***/ }),
-/* 8 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -453,7 +311,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var TBX = __webpack_require__(0);
-var Stats_1 = __webpack_require__(9);
+var Stats_1 = __webpack_require__(13);
 var Entity = /** @class */ (function (_super) {
     __extends(Entity, _super);
     function Entity(Old) {
@@ -490,6 +348,7 @@ var Entity = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(Entity.prototype, "Position", {
+        get: function () { return this.Trans.Translation; },
         set: function (Value) { this.UpdatePosition(Value); },
         enumerable: true,
         configurable: true
@@ -524,11 +383,9 @@ var Entity = /** @class */ (function (_super) {
         return TBX.Vertex.Angle(new TBX.Vertex(0, 1, 0), Zeroed) - 90;
     };
     Entity.prototype.Move = function () {
-        console.log("move");
         var Direction = new TBX.Vertex(0, this.Stats.Speed, 0);
-        Direction.RotateZ(this.Facing - 90);
-        this.Position.X += Direction.X;
-        this.Position.Y += Direction.Y;
+        Direction.RotateZ(this.Facing + 180);
+        this.Position = new TBX.Vertex(this.Position.X + Direction.X, this.Position.Y + Direction.Y, this.Position.Z);
     };
     return Entity;
 }(TBX.Sprite));
@@ -536,7 +393,391 @@ exports.Entity = Entity;
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var State = /** @class */ (function () {
+    function State(Old, Scene) {
+        if (Old) {
+            this._Scene = Old._Scene;
+            this._TimeStamp = Old._TimeStamp;
+            this._Projectiles = [];
+            for (var i in Old._Projectiles)
+                this._Projectiles.push(Old._Projectiles[i].Copy());
+        }
+        else {
+            this.InitState();
+            this._Scene = Scene;
+            State.Current = this;
+        }
+    }
+    Object.defineProperty(State.prototype, "TimeStamp", {
+        get: function () { return this._TimeStamp; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(State.prototype, "Projectiles", {
+        get: function () { return this._Projectiles; },
+        enumerable: true,
+        configurable: true
+    });
+    State.prototype.Copy = function () {
+        return new State(this);
+    };
+    State.prototype.InitState = function () {
+        this._TimeStamp = 0;
+        this._Enemies = [];
+        this._Projectiles = [];
+    };
+    State.prototype.Update = function () {
+        this._TimeStamp++;
+        if (this._TimeStamp == 120000)
+            this._TimeStamp = 0;
+        for (var i in this._Projectiles)
+            this._Projectiles[i].Update();
+    };
+    State.prototype.AttachEnemy = function (Enemy) {
+        this._Scene.Attach(Enemy);
+        this._Enemies.push(Enemy);
+    };
+    State.prototype.RemoveEnemy = function (Enemy) {
+        this._Scene.Remove(Enemy);
+        this._Enemies.splice(this._Enemies.indexOf(Enemy), 1);
+    };
+    State.prototype.AttachProjectile = function (Projectile) {
+        this._Scene.Attach(Projectile);
+        this._Projectiles.push(Projectile);
+    };
+    State.prototype.RemoveProjectile = function (Projectile) {
+        this._Scene.Remove(Projectile);
+        this._Projectiles.splice(this._Projectiles.indexOf(Projectile), 1);
+    };
+    return State;
+}());
+exports.State = State;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MachineGunBullet_1 = __webpack_require__(17);
+var HeavyMachineGunBullet_1 = __webpack_require__(18);
+var ProjectileFactory = /** @class */ (function () {
+    function ProjectileFactory(Old) {
+        if (Old) {
+            this._Pool = Old._Pool;
+        }
+        else {
+            this._Pool = {};
+            ProjectileFactory.Current = this;
+        }
+    }
+    ProjectileFactory.prototype.Copy = function () {
+        return new ProjectileFactory(this);
+    };
+    ProjectileFactory.prototype.Register = function (ID, Entry) {
+        this._Pool[ID] = Entry;
+    };
+    ProjectileFactory.prototype.Create = function (ID) {
+        if (!this._Pool[ID])
+            return null;
+        return this._Pool[ID].Copy();
+    };
+    ProjectileFactory.Init = function () {
+        var Factory = new ProjectileFactory();
+        Factory.Register("MachineGunBullet", new MachineGunBullet_1.MachineGunBullet());
+        Factory.Register("HeavyMachineGunBullet", new HeavyMachineGunBullet_1.HeavyMachineGunBullet());
+    };
+    return ProjectileFactory;
+}());
+exports.ProjectileFactory = ProjectileFactory;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var TBX = __webpack_require__(0);
+var State_1 = __webpack_require__(4);
+var Entity_1 = __webpack_require__(3);
+var Projectile = /** @class */ (function (_super) {
+    __extends(Projectile, _super);
+    function Projectile(Old) {
+        var _this = _super.call(this, Old) || this;
+        if (Old) {
+            _this._Spin = Old._Spin;
+            _this._SpinRate = Old._SpinRate;
+            _this._Damage = Old._Damage;
+            _this._Summons = [];
+            for (var i in Old._Summons) {
+                _this._Summons.push(Old._Summons[i].Copy());
+            }
+        }
+        else {
+            _this.InitProjectile();
+        }
+        return _this;
+    }
+    Object.defineProperty(Projectile.prototype, "Damage", {
+        get: function () { return this._Damage; },
+        enumerable: true,
+        configurable: true
+    });
+    Projectile.prototype.Copy = function () {
+        return new Projectile(this);
+    };
+    Projectile.prototype.Update = function () {
+        if (this._BaseStats.Health <= 0) {
+            State_1.State.Current.RemoveProjectile(this);
+            return;
+        }
+        _super.prototype.Update.call(this);
+        this._BaseStats.Health--;
+    };
+    Projectile.prototype.InitProjectile = function () {
+        this._Damage = 10;
+        this._Summons = [];
+        this._Spin = 0;
+        this._SpinRate = 0;
+        this._BaseStats.Speed = 5;
+        this._BaseStats.Health = 300;
+        this._BaseStats.MaxHealth = 300;
+        this._Moving = true;
+        this.Size = new TBX.Vertex(20, 20, 1);
+    };
+    Projectile.prototype.LoadSprites = function (Path, Length) {
+        _super.prototype.LoadSprites.call(this, "Projectile/" + Path, Length);
+    };
+    return Projectile;
+}(Entity_1.Entity));
+exports.Projectile = Projectile;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Unit_1 = __webpack_require__(2);
+var Behaviour_1 = __webpack_require__(22);
+var Enemy = /** @class */ (function (_super) {
+    __extends(Enemy, _super);
+    function Enemy(Old) {
+        var _this = _super.call(this, Old) || this;
+        if (Old) {
+        }
+        else {
+            _this.InitEnemy();
+        }
+        return _this;
+    }
+    Enemy.prototype.Copy = function () {
+        return new Enemy(this);
+    };
+    Enemy.prototype.InitEnemy = function () {
+        this._Behaviour = new Behaviour_1.Behaviour(null, this);
+    };
+    Enemy.prototype.Update = function () {
+        this._Behaviour.Act();
+        _super.prototype.Update.call(this);
+    };
+    Enemy.prototype.LoadSprites = function (Path, Length) {
+        _super.prototype.LoadSprites.call(this, "Enemy/" + Path, Length);
+    };
+    return Enemy;
+}(Unit_1.Unit));
+exports.Enemy = Enemy;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var GameLogic_1 = __webpack_require__(10);
+var GL = new GameLogic_1.GameLogic();
+GL.Run();
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TBX = __webpack_require__(0);
+var MainMenu_1 = __webpack_require__(11);
+var FactoryInit_1 = __webpack_require__(19);
+var GameLogic = /** @class */ (function () {
+    function GameLogic() {
+        this._Game = new TBX.Game();
+        this._Game.Name = "Perfect Pigeon";
+        this._Runner = new TBX.Runner(this._Game, TBX.DrawEngineType.ThreeJS);
+        this._Runner.SetResolution(new TBX.Vertex(1920, 1080));
+        var _Menu = new MainMenu_1.MainMenu(this._Runner, this._Game);
+        this._Game.Attach(_Menu);
+        FactoryInit_1.FactoryInit.Init();
+    }
+    GameLogic.prototype.Run = function () {
+        this._Runner.SwitchScene("Menu");
+        this._Runner.Run();
+    };
+    return GameLogic;
+}());
+exports.GameLogic = GameLogic;
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var TBX = __webpack_require__(0);
+var GameScene_1 = __webpack_require__(12);
+var MainMenu = /** @class */ (function (_super) {
+    __extends(MainMenu, _super);
+    function MainMenu(Runner, Game) {
+        var _this = _super.call(this) || this;
+        _this._Game = Game;
+        _this._Runner = Runner;
+        _this.Init();
+        return _this;
+    }
+    MainMenu.prototype.Init = function () {
+        this.Name = "Menu";
+        var Buttons = new TBX.ImageCollection(null, ["/Resources/Textures/Play.png"]);
+        var Play = new TBX.Tile();
+        Play.Name = "Play";
+        Play.Collection = Buttons;
+        Play.Index = 0;
+        Play.Trans.Scale = new TBX.Vertex(300, 150, 1);
+        Play.Trans.Translation = new TBX.Vertex(200, 200, 0);
+        Play.Events.MouseDown.push(this.PlayClick.bind(this));
+        this.Attach(Play);
+    };
+    MainMenu.prototype.PlayClick = function (G, Args) {
+        var Scene = new GameScene_1.GameScene();
+        this._Game.Attach(Scene);
+        this._Runner.SwitchScene("Game", false);
+    };
+    return MainMenu;
+}(TBX.Scene2D));
+exports.MainMenu = MainMenu;
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var TBX = __webpack_require__(0);
+var Player_1 = __webpack_require__(1);
+var State_1 = __webpack_require__(4);
+var GameScene = /** @class */ (function (_super) {
+    __extends(GameScene, _super);
+    function GameScene() {
+        var _this = _super.call(this) || this;
+        _this.Init();
+        return _this;
+    }
+    Object.defineProperty(GameScene.prototype, "Pause", {
+        get: function () { return this._Pause; },
+        set: function (value) { this._Pause = value; },
+        enumerable: true,
+        configurable: true
+    });
+    GameScene.prototype.Init = function () {
+        this.Name = "Game";
+        this.BackColor = TBX.Color.Black;
+        this._Player = new Player_1.Player();
+        this.Attach(this._Player);
+        var MainState = new State_1.State(null, this);
+        this.Events.Update.push(this.SceneUpdate.bind(this));
+    };
+    GameScene.prototype.KeyPress = function (G, Args) {
+        if (this._Pause)
+            return;
+        // Key Code here
+    };
+    GameScene.prototype.SceneUpdate = function () {
+        if (this._Pause)
+            return;
+        this._Player.Update();
+        State_1.State.Current.Update();
+    };
+    return GameScene;
+}(TBX.Scene2D));
+exports.GameScene = GameScene;
+
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -585,7 +826,7 @@ exports.Stats = Stats;
 
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -601,7 +842,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var PlayerWeapon_1 = __webpack_require__(11);
+var PlayerWeapon_1 = __webpack_require__(15);
 var MachineGun = /** @class */ (function (_super) {
     __extends(MachineGun, _super);
     function MachineGun(Old) {
@@ -626,7 +867,7 @@ exports.MachineGun = MachineGun;
 
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -643,7 +884,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var TBX = __webpack_require__(0);
-var Weapon_1 = __webpack_require__(12);
+var Weapon_1 = __webpack_require__(16);
 var PlayerWeapon = /** @class */ (function (_super) {
     __extends(PlayerWeapon, _super);
     function PlayerWeapon(Old) {
@@ -677,6 +918,7 @@ var PlayerWeapon = /** @class */ (function (_super) {
         this._Visual = new TBX.Sprite();
         this._Visual.Size = new TBX.Vertex(200, 200, 1);
         this._Visual.Position = new TBX.Vertex(960, 540, 1.5);
+        this._Position = new TBX.Vertex(0, -80, 0);
     };
     PlayerWeapon.prototype.LoadSprites = function (Type) {
         this._Visual.Collection = new TBX.SpriteSetCollection(null, []);
@@ -690,15 +932,15 @@ exports.PlayerWeapon = PlayerWeapon;
 
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var TBX = __webpack_require__(0);
-var State_1 = __webpack_require__(13);
-var ProjectileFactory_1 = __webpack_require__(14);
+var State_1 = __webpack_require__(4);
+var ProjectileFactory_1 = __webpack_require__(5);
 var Weapon = /** @class */ (function () {
     function Weapon(Old) {
         if (Old) {
@@ -746,7 +988,7 @@ var Weapon = /** @class */ (function () {
     Weapon.prototype.InitWeapon = function () {
         this._Active = true;
         this._Ammo = -1;
-        this._FireRate = 10;
+        this._FireRate = 15;
         this._RecoilAngle = 0;
         this._Facing = 0;
         this._Position = new TBX.Vertex();
@@ -759,211 +1001,16 @@ var Weapon = /** @class */ (function () {
         if (State_1.State.Current.TimeStamp % this._FireRate != 0)
             return;
         var NewProjectile = ProjectileFactory_1.ProjectileFactory.Current.Create(this._ProjectileID);
-        NewProjectile.Position = this._ParentPosition.Copy().Add(this._Position);
+        NewProjectile.Position = this._ParentPosition.Copy().Add(this._Position.Copy().RotateZ(this._Facing));
         var Facing = this._Facing;
         if (this._RecoilAngle != 0)
             Facing += TBX.Random.Next(-this._RecoilAngle, this._RecoilAngle);
         NewProjectile.Facing = Facing;
-        State_1.State.Current.Projectiles.push(NewProjectile);
+        State_1.State.Current.AttachProjectile(NewProjectile);
     };
     return Weapon;
 }());
 exports.Weapon = Weapon;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var State = /** @class */ (function () {
-    function State(Old) {
-        if (Old) {
-            this._TimeStamp = Old._TimeStamp;
-            this._Projectiles = [];
-            for (var i in Old._Projectiles)
-                this._Projectiles.push(Old._Projectiles[i].Copy());
-        }
-        else {
-            this.InitState();
-            State.Current = this;
-        }
-    }
-    Object.defineProperty(State.prototype, "TimeStamp", {
-        get: function () { return this._TimeStamp; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(State.prototype, "Projectiles", {
-        get: function () { return this._Projectiles; },
-        enumerable: true,
-        configurable: true
-    });
-    State.prototype.Copy = function () {
-        return new State(this);
-    };
-    State.prototype.InitState = function () {
-        this._TimeStamp = 0;
-        this._Projectiles = [];
-    };
-    State.prototype.Update = function () {
-        this._TimeStamp++;
-        if (this._TimeStamp == 120000)
-            this._TimeStamp = 0;
-        for (var i in this._Projectiles)
-            this._Projectiles[i].Update();
-    };
-    return State;
-}());
-exports.State = State;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var MachineGunBullet_1 = __webpack_require__(16);
-var HeavyMachineGunBullet_1 = __webpack_require__(17);
-var ProjectileFactory = /** @class */ (function () {
-    function ProjectileFactory(Old) {
-        if (Old) {
-            this._Pool = Old._Pool;
-        }
-        else {
-            this._Pool = {};
-            ProjectileFactory.Current = this;
-        }
-    }
-    ProjectileFactory.prototype.Copy = function () {
-        return new ProjectileFactory(this);
-    };
-    ProjectileFactory.prototype.Register = function (ID, Entry) {
-        this._Pool[ID] = Entry;
-    };
-    ProjectileFactory.prototype.Create = function (ID) {
-        if (!this._Pool[ID])
-            return null;
-        return this._Pool[ID].Copy();
-    };
-    ProjectileFactory.Init = function () {
-        var Factory = new ProjectileFactory();
-        Factory.Register("MachineGunBullet", new MachineGunBullet_1.MachineGunBullet());
-        Factory.Register("HeavyMachineGunBullet", new HeavyMachineGunBullet_1.HeavyMachineGunBullet());
-    };
-    return ProjectileFactory;
-}());
-exports.ProjectileFactory = ProjectileFactory;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var TBX = __webpack_require__(0);
-var Entity_1 = __webpack_require__(8);
-var Projectile = /** @class */ (function (_super) {
-    __extends(Projectile, _super);
-    function Projectile(Old) {
-        var _this = _super.call(this, Old) || this;
-        if (Old) {
-            _this._Spin = Old._Spin;
-            _this._SpinRate = Old._SpinRate;
-            _this._Damage = Old._Damage;
-            _this._Summons = [];
-            for (var i in Old._Summons) {
-                _this._Summons.push(Old._Summons[i].Copy());
-            }
-        }
-        else {
-            _this.InitProjectile();
-        }
-        return _this;
-    }
-    Object.defineProperty(Projectile.prototype, "Damage", {
-        get: function () { return this._Damage; },
-        enumerable: true,
-        configurable: true
-    });
-    Projectile.prototype.Copy = function () {
-        return new Projectile(this);
-    };
-    Projectile.prototype.InitProjectile = function () {
-        this._Damage = 10;
-        this._Summons = [];
-        this._Spin = 0;
-        this._SpinRate = 0;
-        this._BaseStats.Speed = 10;
-        this._BaseStats.Health = 5000;
-        this._BaseStats.MaxHealth = 5000;
-        this._Moving = true;
-        this.Size = new TBX.Vertex(20, 20, 1);
-    };
-    Projectile.prototype.LoadSprites = function (Path, Length) {
-        _super.prototype.LoadSprites.call(this, "Projectile/" + Path, Length);
-    };
-    return Projectile;
-}(Entity_1.Entity));
-exports.Projectile = Projectile;
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var TBX = __webpack_require__(0);
-var Projectile_1 = __webpack_require__(15);
-var MachineGunBullet = /** @class */ (function (_super) {
-    __extends(MachineGunBullet, _super);
-    function MachineGunBullet(Old) {
-        var _this = _super.call(this, Old) || this;
-        if (Old) {
-        }
-        else {
-            _this.InitMachineGunBullet();
-        }
-        return _this;
-    }
-    MachineGunBullet.prototype.Copy = function () {
-        return new MachineGunBullet(this);
-    };
-    MachineGunBullet.prototype.InitMachineGunBullet = function () {
-        this.Paint = TBX.Color.Black;
-        this.LoadSprites("Player/Bullet", 1);
-    };
-    return MachineGunBullet;
-}(Projectile_1.Projectile));
-exports.MachineGunBullet = MachineGunBullet;
 
 
 /***/ }),
@@ -983,28 +1030,31 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Projectile_1 = __webpack_require__(15);
-var HeavyMachineGunBullet = /** @class */ (function (_super) {
-    __extends(HeavyMachineGunBullet, _super);
-    function HeavyMachineGunBullet(Old) {
+var TBX = __webpack_require__(0);
+var Projectile_1 = __webpack_require__(6);
+var MachineGunBullet = /** @class */ (function (_super) {
+    __extends(MachineGunBullet, _super);
+    function MachineGunBullet(Old) {
         var _this = _super.call(this, Old) || this;
         if (Old) {
         }
         else {
-            _this.InitHeavyMachineGunBullet();
+            _this.InitMachineGunBullet();
         }
         return _this;
     }
-    HeavyMachineGunBullet.prototype.Copy = function () {
-        return new HeavyMachineGunBullet(this);
+    MachineGunBullet.prototype.Copy = function () {
+        return new MachineGunBullet(this);
     };
-    HeavyMachineGunBullet.prototype.InitHeavyMachineGunBullet = function () {
-        this._BaseStats.Speed = 15;
+    MachineGunBullet.prototype.InitMachineGunBullet = function () {
+        this.Name = "MachineGunBullet";
+        this.Size = new TBX.Vertex(15, 15, 1);
+        this.Paint = TBX.Color.Red;
         this.LoadSprites("Player/Bullet", 1);
     };
-    return HeavyMachineGunBullet;
+    return MachineGunBullet;
 }(Projectile_1.Projectile));
-exports.HeavyMachineGunBullet = HeavyMachineGunBullet;
+exports.MachineGunBullet = MachineGunBullet;
 
 
 /***/ }),
@@ -1024,35 +1074,29 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Unit_1 = __webpack_require__(7);
-var Behaviour_1 = __webpack_require__(22);
-var Enemy = /** @class */ (function (_super) {
-    __extends(Enemy, _super);
-    function Enemy(Old) {
+var Projectile_1 = __webpack_require__(6);
+var HeavyMachineGunBullet = /** @class */ (function (_super) {
+    __extends(HeavyMachineGunBullet, _super);
+    function HeavyMachineGunBullet(Old) {
         var _this = _super.call(this, Old) || this;
         if (Old) {
         }
         else {
-            _this.InitEnemy();
+            _this.InitHeavyMachineGunBullet();
         }
         return _this;
     }
-    Enemy.prototype.Copy = function () {
-        return new Enemy(this);
+    HeavyMachineGunBullet.prototype.Copy = function () {
+        return new HeavyMachineGunBullet(this);
     };
-    Enemy.prototype.InitEnemy = function () {
-        this._Behaviour = new Behaviour_1.Behaviour(null, this);
+    HeavyMachineGunBullet.prototype.InitHeavyMachineGunBullet = function () {
+        this.Name = "HeavyMachineGunBullet";
+        this._BaseStats.Speed = 10;
+        this.LoadSprites("Player/Bullet", 1);
     };
-    Enemy.prototype.Update = function () {
-        this._Behaviour.Act();
-        _super.prototype.Update.call(this);
-    };
-    Enemy.prototype.LoadSprites = function (Path, Length) {
-        _super.prototype.LoadSprites.call(this, "Enemy/" + Path, Length);
-    };
-    return Enemy;
-}(Unit_1.Unit));
-exports.Enemy = Enemy;
+    return HeavyMachineGunBullet;
+}(Projectile_1.Projectile));
+exports.HeavyMachineGunBullet = HeavyMachineGunBullet;
 
 
 /***/ }),
@@ -1063,7 +1107,7 @@ exports.Enemy = Enemy;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var EnemyFactory_1 = __webpack_require__(20);
-var ProjectileFactory_1 = __webpack_require__(14);
+var ProjectileFactory_1 = __webpack_require__(5);
 var FactoryInit = /** @class */ (function () {
     function FactoryInit() {
     }
@@ -1136,7 +1180,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Enemy_1 = __webpack_require__(18);
+var Enemy_1 = __webpack_require__(7);
 var AlienGuard = /** @class */ (function (_super) {
     __extends(AlienGuard, _super);
     function AlienGuard(Old) {
@@ -1167,7 +1211,7 @@ exports.AlienGuard = AlienGuard;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var TBX = __webpack_require__(0);
-var Player_1 = __webpack_require__(6);
+var Player_1 = __webpack_require__(1);
 var SCREEN_WIDTH = 1920;
 var SCREEN_HEIGHT = 1080;
 var Behaviour = /** @class */ (function () {
@@ -1229,7 +1273,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Enemy_1 = __webpack_require__(18);
+var Enemy_1 = __webpack_require__(7);
 var AlienCaptain = /** @class */ (function (_super) {
     __extends(AlienCaptain, _super);
     function AlienCaptain(Old) {
@@ -1252,6 +1296,48 @@ var AlienCaptain = /** @class */ (function (_super) {
     return AlienCaptain;
 }(Enemy_1.Enemy));
 exports.AlienCaptain = AlienCaptain;
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var PlayerWeapon_1 = __webpack_require__(15);
+var HeavyMachineGun = /** @class */ (function (_super) {
+    __extends(HeavyMachineGun, _super);
+    function HeavyMachineGun(Old) {
+        var _this = _super.call(this, Old) || this;
+        if (Old) {
+        }
+        else {
+            _this.InitHeavyMachineGun();
+        }
+        return _this;
+    }
+    HeavyMachineGun.prototype.Copy = function () {
+        return new HeavyMachineGun(this);
+    };
+    HeavyMachineGun.prototype.InitHeavyMachineGun = function () {
+        this._ProjectileID = "HeavyMachineGunBullet";
+        this._FireRate = 8;
+        this.LoadSprites("HeavyMachineGun");
+    };
+    return HeavyMachineGun;
+}(PlayerWeapon_1.PlayerWeapon));
+exports.HeavyMachineGun = HeavyMachineGun;
 
 
 /***/ })

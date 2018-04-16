@@ -2,6 +2,7 @@ export { Projectile }
 
 import * as TBX from "engineer-js";
 
+import { State } from "./../Entities/State";
 import { Entity } from "./../Entities/Entity";
 
 class Projectile extends Entity
@@ -34,15 +35,26 @@ class Projectile extends Entity
     {
         return new Projectile(this);
     }
+    public Update() : void
+    {
+        if(this._BaseStats.Health <= 0)
+        {
+            
+            State.Current.RemoveProjectile(this);
+            return;
+        }
+        super.Update();
+        this._BaseStats.Health--;
+    }
     private InitProjectile() : void
     {
         this._Damage = 10;
         this._Summons = [];
         this._Spin = 0;
         this._SpinRate = 0;
-        this._BaseStats.Speed = 10;
-        this._BaseStats.Health = 5000;
-        this._BaseStats.MaxHealth = 5000;
+        this._BaseStats.Speed = 5;
+        this._BaseStats.Health = 300;
+        this._BaseStats.MaxHealth = 300;
         this._Moving = true;
         this.Size = new TBX.Vertex(20,20,1);
     }

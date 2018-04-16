@@ -1,5 +1,7 @@
 export { MachineGun }
 
+import * as TBX from "engineer-js";
+
 import { PlayerWeapon } from "./PlayerWeapon";
 
 class MachineGun extends PlayerWeapon

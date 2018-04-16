@@ -19,10 +19,10 @@ class GameScene extends TBX.Scene2D
     public Init(): void
     {
         this.Name = "Game";
-        this.BackColor = TBX.Color.Teal;
+        this.BackColor = TBX.Color.Black;
         this._Player = new Player();
         this.Attach(this._Player);
-        let MainState:State = new State();
+        let MainState:State = new State(null, this);
         this.Events.Update.push(this.SceneUpdate.bind(this));
     }
     private KeyPress(G: any, Args: any): void
@@ -34,5 +34,6 @@ class GameScene extends TBX.Scene2D
     {
         if(this._Pause) return;
         this._Player.Update();
+        State.Current.Update();
     }
 }

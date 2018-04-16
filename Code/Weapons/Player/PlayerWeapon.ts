@@ -31,6 +31,7 @@ class PlayerWeapon extends Weapon
         this._Visual = new TBX.Sprite();
         this._Visual.Size = new TBX.Vertex(200,200,1);
         this._Visual.Position = new TBX.Vertex(960, 540, 1.5);
+        this._Position = new TBX.Vertex(0,-80,0);
     }
     protected LoadSprites(Type:string) : void
     {

@@ -15,6 +15,7 @@ class Entity extends TBX.Sprite
     public get Facing(): number { return this.Trans.Rotation.Z; }
     public set Facing(Value:number) { this.Trans.Rotation.Z = Value; }
     public set Moving(Value:boolean) { this._Moving = Value; }
+    public get Position():TBX.Vertex { return this.Trans.Translation; }
     public set Position(Value:TBX.Vertex) { this.UpdatePosition(Value); }
     public constructor(Old:Entity)
     {
@@ -65,10 +66,8 @@ class Entity extends TBX.Sprite
     }
     public Move() : void
     {
-        console.log("move");
         let Direction = new TBX.Vertex(0, this.Stats.Speed,0);
-        Direction.RotateZ(this.Facing - 90);
-        this.Position.X += Direction.X;
-        this.Position.Y += Direction.Y;
+        Direction.RotateZ(this.Facing + 180);
+        this.Position = new TBX.Vertex(this.Position.X + Direction.X, this.Position.Y + Direction.Y, this.Position.Z);
     }
 }

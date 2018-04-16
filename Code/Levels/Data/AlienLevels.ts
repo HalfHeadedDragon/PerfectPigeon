@@ -5,6 +5,7 @@ let AlienLevels =
     {
         ID: "1-1",
         Back: "Town",
+        EnemyCap: 10,
         Enemies:
         [
             {
@@ -20,6 +21,7 @@ let AlienLevels =
     {
         ID: "AlienGuard-Test",
         Back: "Town",
+        EnemyCap: 1,
         Enemies:
         [
             {
@@ -31,6 +33,7 @@ let AlienLevels =
     {
         ID: "AlienCaptain-Test",
         Back: "Town",
+        EnemyCap: 1,
         Enemies:
         [
             {

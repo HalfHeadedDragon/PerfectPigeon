@@ -24,7 +24,9 @@ class MachineGunBullet extends Projectile
     }
     private InitMachineGunBullet() : void
     {
-        this.Paint = TBX.Color.Black;
+        this.Name = "MachineGunBullet";
+        this.Size = new TBX.Vertex(15,15,1);
+        this.Paint = TBX.Color.Red;
         this.LoadSprites("Player/Bullet", 1);
     }
 }

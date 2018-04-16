@@ -22,7 +22,8 @@ class HeavyMachineGunBullet extends Projectile
     }
     private InitHeavyMachineGunBullet() : void
     {
-        this._BaseStats.Speed = 15;
+        this.Name = "HeavyMachineGunBullet";
+        this._BaseStats.Speed = 10;
         this.LoadSprites("Player/Bullet", 1);
     }
 }

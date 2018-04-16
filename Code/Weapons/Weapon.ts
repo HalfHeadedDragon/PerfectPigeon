@@ -47,7 +47,7 @@ class Weapon
     {
         this._Active = true;
         this._Ammo = -1;
-        this._FireRate = 10;
+        this._FireRate = 15;
         this._RecoilAngle = 0;
         this._Facing = 0;
         this._Position = new TBX.Vertex();
@@ -58,10 +58,10 @@ class Weapon
         if(this._Ammo != -1 && this._Ammo < 1) return;
         if(State.Current.TimeStamp % this._FireRate != 0) return;
         let NewProjectile:Projectile = ProjectileFactory.Current.Create(this._ProjectileID);
-        NewProjectile.Position = this._ParentPosition.Copy().Add(this._Position);
+        NewProjectile.Position = this._ParentPosition.Copy().Add(this._Position.Copy().RotateZ(this._Facing));
         let Facing = this._Facing;
         if(this._RecoilAngle != 0) Facing += TBX.Random.Next(-this._RecoilAngle, this._RecoilAngle);
         NewProjectile.Facing = Facing;
-        State.Current.Projectiles.push(NewProjectile);
+        State.Current.AttachProjectile(NewProjectile);
     }
 }
