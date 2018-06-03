@@ -12,6 +12,8 @@ class Level
     private _EnemyCap:number;
     private _Enemies:Enemy[];
     public get ID():string { return this._ID; }
+    public get Cap():number { return this._EnemyCap; }
+    public get Enemies():Enemy[] { return this._Enemies; }
     public constructor(Old?:Level)
     {
         if(Old)
@@ -46,7 +48,7 @@ class Level
             {
                 for(let j = 0; j < Data.Enemies[i].Amount; j++)
                 {
-                    this._Enemies.push(EnemyFactory.Current.Create(this._Enemies[i].Type));
+                    this._Enemies.push(EnemyFactory.Current.Create(Data.Enemies[i].Type));
                 }
             }
             return true;

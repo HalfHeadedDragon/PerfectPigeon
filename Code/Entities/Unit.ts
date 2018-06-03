@@ -12,6 +12,7 @@ class Unit extends Entity
     protected _Buffs:Buff[];
     protected _Weapons:Weapon[];
     public set Shooting(Value:boolean) { this._Shooting = Value; }
+    public get Facing(): number { return this.Trans.Rotation.Z; }
     public set Facing(Value:number) { this.UpdateFacing(Value); }
     public constructor(Old?:Unit)
     {
@@ -38,6 +39,7 @@ class Unit extends Entity
         this._Shooting = false;
         this._Buffs = [];
         this._Weapons = [];
+        this.Size = new TBX.Vertex(200,200,1);
     }
     public Update() : void
     {

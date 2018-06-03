@@ -13,7 +13,7 @@ class Entity extends TBX.Sprite
     public get Stats(): Stats { return this._Stats; }
     public get Owner(): number { return this._OwnerIndex; }
     public get Facing(): number { return this.Trans.Rotation.Z; }
-    public set Facing(Value:number) { this.Trans.Rotation.Z = Value; }
+    public set Facing(Value:number) { this.Trans.Rotation = new TBX.Vertex(0,0,Value); }
     public set Moving(Value:boolean) { this._Moving = Value; }
     public get Position():TBX.Vertex { return this.Trans.Translation; }
     public set Position(Value:TBX.Vertex) { this.UpdatePosition(Value); }
@@ -39,6 +39,8 @@ class Entity extends TBX.Sprite
     {
         this._Moving = false;
         this._OwnerIndex = 1;
+        this.Collision.Active = true;
+        this.Collision.Type = TBX.CollisionType.Radius;
         this._BaseStats = new Stats();
     }
     public Update() : void
@@ -66,6 +68,7 @@ class Entity extends TBX.Sprite
     }
     public Move() : void
     {
+        // Virtual
         let Direction = new TBX.Vertex(0, this.Stats.Speed,0);
         Direction.RotateZ(this.Facing + 180);
         this.Position = new TBX.Vertex(this.Position.X + Direction.X, this.Position.Y + Direction.Y, this.Position.Z);

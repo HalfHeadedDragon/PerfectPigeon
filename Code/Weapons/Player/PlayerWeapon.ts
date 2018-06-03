@@ -29,6 +29,7 @@ class PlayerWeapon extends Weapon
     private InitPlayerWeapon() : void
     {
         this._Visual = new TBX.Sprite();
+        this._Visual.Fixed = true;
         this._Visual.Size = new TBX.Vertex(200,200,1);
         this._Visual.Position = new TBX.Vertex(960, 540, 1.5);
         this._Position = new TBX.Vertex(0,-80,0);

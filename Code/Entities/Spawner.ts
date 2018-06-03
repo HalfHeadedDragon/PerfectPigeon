@@ -1,12 +1,14 @@
 export { Spawner }
 
+import * as TBX from "engineer-js";
+
 import { State } from "./State";
+import { Enemy } from "./../Enemies/Enemy";
 import { Player } from "./../Player/Player";
 import { Level } from "./../Levels/Level";
 
 class Spawner
 {
-    private _Number:number;
     private _Level:Level;
     private _State:State;
     public constructor(Old?:Spawner, State?:State, Level?:Level)
@@ -19,7 +21,6 @@ class Spawner
         }
         else
         {
-            this._Number = 0;
             this._Level = Level;
             this._State = State;
         }
@@ -30,6 +31,15 @@ class Spawner
     }
     public Spawn() : void
     {
-        
+        while(this._State.NumberOfEnemies < this._Level.Cap && this._Level.Enemies.length > 0)
+        {
+            let SpawnedIndex:number = TBX.Random.Next(0,this._Level.Enemies.length - 1);
+            let Spawned:Enemy = this._Level.Enemies[SpawnedIndex];
+            let Offset:TBX.Vertex = new TBX.Vertex(0, TBX.Random.Next(800,1000), 0);
+            Offset.RotateZ(TBX.Random.Next(0,359));
+            Spawned.Position = Player.Current.RealPosition.Copy().Add(Offset);
+            this._State.AttachEnemy(Spawned);
+            this._Level.Enemies.splice(SpawnedIndex, 1);
+        }
     }
 }

@@ -5,9 +5,6 @@ import * as TBX from "engineer-js";
 import { Unit } from "./../Entities/Unit";
 import { Player } from "./../Player/Player";
 
-const SCREEN_WIDTH = 1920;
-const SCREEN_HEIGHT = 1080;
-
 class Behaviour
 {
     protected _Unit:Unit;
@@ -25,8 +22,8 @@ class Behaviour
         else
         {
 
-            let Sight = 800;
-            let Radius = 400;
+            let Sight = TBX.Random.Next(700, 900);
+            let Radius = TBX.Random.Next(300, 600);
             this._Sight = Sight;
             this._Radius = Radius;
             this._Unit = Unit;
@@ -34,12 +31,12 @@ class Behaviour
     }
     public Act() : void
     {
-        let TargetLoc:TBX.Vertex = Player.Current.Position;
+        let TargetLoc:TBX.Vertex = Player.Current.RealPosition;
         let SightSat:boolean = TBX.Vertex.Distance(TargetLoc, this._Unit.Trans.Translation) < this._Sight;
         let RadiusSat:boolean = TBX.Vertex.Distance(TargetLoc, this._Unit.Trans.Translation) < this._Radius;
         let Zeroed:TBX.Vertex = new TBX.Vertex(TargetLoc.X - this._Unit.Trans.Translation.X, TargetLoc.Y - this._Unit.Trans.Translation.Y, 0);
         this._Angle = TBX.Vertex.Angle(new TBX.Vertex(0, 1, 0), Zeroed);
-        this._Unit.Facing = this._Angle;
+        this._Unit.Facing = this._Angle + 90;
         if(RadiusSat)
         {
             this.RadiusAct();

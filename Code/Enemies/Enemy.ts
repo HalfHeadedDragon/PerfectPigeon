@@ -2,8 +2,10 @@ export { Enemy }
 
 import * as TBX from "engineer-js";
 
-import { Unit } from "./../Entities/Unit";
 import { Behaviour } from "./Behaviour";
+import { Unit } from "./../Entities/Unit";
+import { State } from "./../Entities/State";
+import { Projectile } from "./../Projectiles/Projectile";
 
 class Enemy extends Unit
 {
@@ -13,7 +15,7 @@ class Enemy extends Unit
         super(Old);
         if(Old)
         {
-
+            this._Behaviour = new Behaviour(null, this);
         }
         else
         {
@@ -30,11 +32,21 @@ class Enemy extends Unit
     }
     public Update() : void
     {
+        if(this._BaseStats.Health <= 0)
+        {
+            State.Current.RemoveEnemy(this);
+            return;
+        }
         this._Behaviour.Act();
         super.Update();
     }
     protected LoadSprites(Path:string, Length:number) : void
     {
         super.LoadSprites("Enemy/"+Path, Length);
+    }
+    public Damage(Projectile:Projectile) : void
+    {
+        this._BaseStats.Health -= Projectile.Damage;
+        if(this._BaseStats.Health < 0) this._BaseStats.Health = 0;
     }
 }

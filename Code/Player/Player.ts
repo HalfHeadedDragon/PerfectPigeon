@@ -10,12 +10,14 @@ import { PlayerWeapon } from "./../Weapons/Player/PlayerWeapon";
 class Player extends Unit
 {
     public static Current:Player;
+    private _Scene:TBX.Scene2D;
     private _LeftMachineGun:MachineGun;
     private _RightMachineGun:MachineGun;
     private _LeftHeavyMachineGun:HeavyMachineGun;
     private _RightHeavyMachineGun:HeavyMachineGun;
     private _Stand:TBX.Sprite;
-    public constructor(Old?:Player)
+    public get RealPosition():TBX.Vertex { return this.Position.Copy().Add(this._Scene.Trans.Translation.Copy().Scalar(-1)); }
+    public constructor(Old?:Player, Scene?:TBX.Scene2D)
     {
         super(Old)
         if(Old)
@@ -26,6 +28,7 @@ class Player extends Unit
         {
             this.InitPlayer();
             Player.Current = this;
+            this._Scene = Scene;
         }
     }
     public Copy() : Player
@@ -34,6 +37,7 @@ class Player extends Unit
     }
     private InitPlayer() : void
     {
+        this.Fixed = true;
         this._Shooting = false;
         this.LoadSprites("Player/Pigeon/Pigeon", 3);
 
@@ -50,10 +54,11 @@ class Player extends Unit
         this._RightHeavyMachineGun.Position.X = 38;
         this.AttachWeapon(this._LeftHeavyMachineGun);
         this.AttachWeapon(this._RightHeavyMachineGun);
-        
+
         this.Size = new TBX.Vertex(200,200,1);
         this.Position = new TBX.Vertex(960, 540, 1.5);
         this._Stand = TBX.SceneObjectUtil.CreateSprite("Stand", ["Resources/Textures/Player/Stand/Stand.png"], this.Position, this.Size);
+        this._Stand.Fixed = true;
         this._Stand.Position = new TBX.Vertex(960, 540, 1.6);
     }
     public Update() : void
@@ -79,6 +84,13 @@ class Player extends Unit
         // Override
         super.UpdateFacing(Facing);
         this._Stand.Trans.Rotation.Z = Facing;
+    }
+    protected UpdateWeaponPosition(Position:TBX.Vertex) : void
+    {
+        for(let i in this._Weapons)
+        {
+            this._Weapons[i].ParentPosition = Position;
+        }
     }
     public OnAttach(Args:any) : void
     {
@@ -106,5 +118,13 @@ class Player extends Unit
             let PW:PlayerWeapon = <PlayerWeapon> this._Weapons[i];
             Scene.Remove(PW.Visual);
         }
+    }
+    public Move() : void
+    {
+        // Virtual
+        let Direction = new TBX.Vertex(0, this.Stats.Speed,0);
+        Direction.RotateZ(this.Facing + 180);
+        this._Scene.Trans.Translation = new TBX.Vertex(this._Scene.Trans.Translation.X - Direction.X, this._Scene.Trans.Translation.Y - Direction.Y, this._Scene.Trans.Translation.Z);
+        this.UpdateWeaponPosition(this.RealPosition);
     }
 }
